@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e7e1">
+  <title>Künstlergalerie — Portfolio</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #e9e7e1;
+      --paper-card: #dedbd4;
+      --ink: #25241f;
+      --muted: #77756e;
+      --line: rgba(37, 36, 31, 0.2);
+      --accent: #9b644c;
+      --description-text: #494740;
+      --modal-bg: rgba(37, 36, 31, 0.85);
+      --modal-card: #ece9e2;
+      --modal-box-bg: #dedad2;
+      --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.dark-mode {
+      color-scheme: dark;
+      --paper: #161513;
+      --paper-card: #211f1c;
+      --ink: #f0eee9;
+      --muted: #a09d95;
+      --line: rgba(240, 238, 233, 0.15);
+      --accent: #d49070;
+      --description-text: #c2beba;
+      --modal-bg: rgba(10, 10, 9, 0.92);
+      --modal-card: #1f1d1a;
+      --modal-box-bg: #2a2723;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px clamp(20px, 5vw, 76px) 32px;
+    }
+
+    header, footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .mark {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Dark Mode Toggle Button */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Navigation & Gallery Switcher */
+    .gallery-nav {
+      display: flex;
+      gap: 16px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .gallery-nav button {
+      background: none;
+      border: none;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 0;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .gallery-nav button::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: width 0.3s ease;
+    }
+
+    .gallery-nav button.active {
+      color: var(--ink);
+      font-weight: bold;
+    }
+
+    .gallery-nav button.active::after,
+    .gallery-nav button:hover::after {
+      width: 100%;
+    }
+
+    .gallery-nav button:hover {
+      color: var(--ink);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(270px, 0.6fr);
+      gap: clamp(36px, 8vw, 120px);
+      align-items: center;
+      padding: clamp(40px, 8vh, 90px) 0;
+    }
+
+    /* Artwork Display Section */
+    .artwork-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .artwork {
+      margin: 0;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      background: var(--paper-card);
+      overflow: hidden;
+      cursor: zoom-in;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      transition: var(--transition-smooth);
+    }
+
+    .artwork:hover {
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .artwork img {
+      display: block;
+      width: 100%;
+      height: min(68vh, 720px);
+      object-fit: contain;
+      transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .artwork.fade-out img {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .caption-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 16px;
+    }
+
+    .caption-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    /* Artist Credit */
+    .artist-credit {
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    .artist-credit span {
+      font-family: Arial, sans-serif;
+      font-style: normal;
+      font-size: 11px;
+      color: var(--accent);
+      margin-left: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    /* Text & Content Section */
+    .text-content-wrapper {
+      position: relative;
+    }
+
+    .text-slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .text-slide.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .text {
+      max-width: 410px;
+    }
+
+    .eyebrow {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(40px, 6vw, 76px);
+      font-weight: 400;
+      letter-spacing: -0.05em;
+      line-height: 0.98;
+    }
+
+    /* Pricing Section */
+    .price-tag {
+      margin: 0 0 24px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--ink);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .price-tag .vat-note {
+      font-size: 11px;
+      font-weight: normal;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .description {
+      color: var(--description-text);
+      font-size: 16px;
+      line-height: 1.8;
+      transition: color 0.4s ease;
+    }
+
+    .description p {
+      margin: 0 0 18px;
+    }
+
+    /* Controls */
+    .controls-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .nav-arrow-btn, .inquire-btn {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 12px 20px;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .inquire-btn {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+      font-weight: bold;
+    }
+
+    .inquire-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .nav-arrow-btn:hover {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    footer {
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-bg);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      cursor: zoom-out;
+      padding: 40px;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    /* Clean Museum Purchase Inquiry Modal */
+    .inquiry-modal {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-bg);
+      z-index: 1050;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .inquiry-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .inquiry-card {
+      background: var(--modal-card);
+      padding: 44px 40px;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      color: var(--ink);
+    }
+
+    .inquiry-card h2 {
+      margin: 0 0 24px;
+      font-size: 34px;
+      font-weight: 400;
+      font-family: Georgia, serif;
+      letter-spacing: -0.02em;
+    }
+
+    .inquiry-subtitle {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    .inquiry-info-box {
+      background: var(--modal-box-bg);
+      padding: 20px 24px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .inquiry-info-box strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .inquiry-info-box .price-line {
+      color: var(--description-text);
+      margin-bottom: 16px;
+    }
+
+    .inquiry-info-box .contact-text {
+      color: var(--description-text);
+      margin-bottom: 4px;
+    }
+
+    .inquiry-info-box a {
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      word-break: break-all;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--ink);
+      font-size: 22px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 860px) {
+      main {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 30px 0;
+      }
+
+      .artwork {
+        min-height: 320px;
+      }
+
+      .artwork img {
+        height: min(55vh, 500px);
+      }
+
+      .text {
+        max-width: 100%;
+      }
+      
+      header, footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .header-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .gallery-nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .inquiry-card {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <span class="mark">Portfolio &amp; Ausstellung</span>
+      <div class="header-right">
+        <ul class="gallery-nav" id="galleryNav">
+          <li><button class="active" onclick="switchArtwork(0)">01. Ohne Titel</button></li>
+          <li><button onclick="switchArtwork(1)">02. Lebenslinien</button></li>
+          <li><button onclick="switchArtwork(2)">03. Metamorphose des Codes</button></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Artwork Display -->
+      <section aria-label="Abbildung des Kunstwerks">
+        <div class="artwork-container">
+          <figure class="artwork" id="artworkBox" onclick="openLightbox()">
+            <img id="artworkImage" src="k1.jpeg" alt="Kunstwerk Ohne Titel">
+          </figure>
+          <div class="caption-row">
+            <div class="caption-info">
+              <figcaption class="caption" id="artworkCaption">Ohne Titel · Abbildung des Kunstwerks</figcaption>
+              <div class="artist-credit" id="artworkArtist">Noah D. <span>aka nonondr</span></div>
+            </div>
+            <span class="counter" id="artworkCounter">01 / 03</span>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <button class="nav-arrow-btn" onclick="prevArtwork()">← Zurück</button>
+          <button class="nav-arrow-btn" onclick="nextArtwork()">Weiter →</button>
+          <button class="inquire-btn" onclick="openInquiryModal()">Werk Anfragen</button>
+        </div>
+      </section>
+
+      <!-- Text Content Area -->
+      <div class="text-content-wrapper">
+        
+        <!-- Werk 1 -->
+        <article class="text text-slide active" id="slide-0">
+          <p class="eyebrow">Ein Bildraum in Spuren</p>
+          <h1>Ohne<br>Titel</h1>
+          <div class="price-tag">
+            7.789 € <span class="vat-note">(brutto exkl. MwSt.)</span>
+          </div>
+          <div class="description">
+            <p>
+              Ein fragiles Fragment schwebt vor einer weiten, ruhigen Fläche.
+              Zarte Linien und vereinzelte Farbakzente verdichten sich zu einer
+              Gestalt, die sich keiner eindeutigen Lesart fügt.
+            </p>
+            <p>
+              Zwischen Erscheinen und Verschwinden entsteht ein Bildraum, in dem
+              die Wahrnehmung selbst zum Thema wird: Was sehen wir – und was
+              ergänzen wir aus unserer Vorstellung?
+            </p>
+            <p>
+              Die Arbeit lädt dazu ein, im Unvollständigen Bedeutung zu entdecken.
+              Ihre Offenheit bewahrt das Motiv davor, festgelegt zu werden, und
+              macht aus wenigen Spuren einen Ort für mögliche Geschichten.
+            </p>
+          </div>
+        </article>
+
+        <!-- Werk 2 -->
+        <article class="text text-slide" id="slide-1">
+          <p class="eyebrow">Spuren des Seins</p>
+          <h1>Lebens-<br>linien</h1>
+          <div class="price-tag">
+            9.187 € <span class="vat-note">(brutto exkl. MwSt.)</span>
+          </div>
+          <div class="description">
+            <p>
+              Schwarze Linien durchziehen das gefaltete Papier wie Spuren eines gelebten Lebens. 
+              Sie kreuzen einander, weichen aus, brechen ab und finden neue Wege. 
+              Jede Linie steht für eine Erfahrung, eine Entscheidung oder eine Begegnung.
+            </p>
+            <p>
+              Die blassen Farbfelder und die sichtbaren Falten erinnern daran, 
+              dass Lebenswege nicht geradlinig verlaufen. Sie tragen Spuren der Zeit 
+              und bleiben doch in ständiger Bewegung.
+            </p>
+            <p>
+              Die Arbeit lädt dazu ein, in den Linien die eigene Geschichte zu suchen: 
+              einzigartig, unvollkommen und stets im Werden begriffen.
+            </p>
+          </div>
+        </article>
+
+        <!-- Werk 3 -->
+        <article class="text text-slide" id="slide-2">
+          <p class="eyebrow">Struktur im Wandel</p>
+          <h1>Metamorphose<br>des Codes</h1>
+          <div class="price-tag">
+            4.494 € <span class="vat-note">(brutto exkl. MwSt.)</span>
+          </div>
+          <div class="description">
+            <p>
+              Eine filigrane Flotte aus digitalem Code und Papier bricht in den dreidimensionalen 
+              Raum auf. Systempfade, Fragmente und Konfigurationen wandeln sich unter den Händen 
+              zu maritimen Skulpturen.
+            </p>
+            <p>
+              Hier verschmilzt die kalte, funktionale Welt der IT mit der organischen Zartheit 
+              des gefalteten Mediums. Die Schiffe navigieren buchstäblich durch stürmische 
+              Verzeichnisse voller Logik und Syntax.
+            </p>
+            <p>
+              Ein ironisches und zugleich poetisches Statement über das Bestehen von Handwerk 
+              und Form inmitten der digitalen Infrastruktur.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <footer>
+      <span>Ausstellung 2026</span>
+      <span>© Kunstwerk Portfolio</span>
+    </footer>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightboxModal" onclick="closeLightbox()">
+    <img id="lightboxImage" src="" alt="Vollbild Ansicht">
+  </div>
+
+  <!-- Exaktes Kaufanfrage Modal nach Bildvorlage -->
+  <div class="inquiry-modal" id="inquiryModal" onclick="if(event.target === this) closeInquiryModal()">
+    <div class="inquiry-card">
+      <button class="modal-close-btn" onclick="closeInquiryModal()">✕</button>
+      <h2>Kaufanfrage</h2>
+      <div class="inquiry-subtitle" id="inquirySubtitle">Interesse an "Ohne Titel"?</div>
+      
+      <div class="inquiry-info-box">
+        <strong id="inquiryWerkTitle">Werk: Ohne Titel von Noah D. (aka nonondr)</strong>
+        <div class="price-line" id="inquiryPreisLine">Preis: 7.789 € (brutto exkl. MwSt.)</div>
+        
+        <div class="contact-text">
+          Für Akquise, Echtheitszertifikat &amp; Transport bitten wir um Kontaktaufnahme unter:
+        </div>
+        <a id="inquiryMailLink" href="mailto:gallery@avantgarde-art.com?subject=Kaufanfrage%20Werk">gallery@avantgarde-art.com</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const artworks = [
+      {
+        src: "k1.jpeg",
+        title: "Ohne Titel",
+        price: "7.789 €",
+        caption: "Ohne Titel · Abbildung des Kunstwerks",
+        artistName: "Noah D.",
+        artistAlias: "aka nonondr"
+      },
+      {
+        src: "k2.jpeg",
+        title: "Lebenslinien",
+        price: "9.187 €",
+        caption: "Lebenslinien · Abbildung des Kunstwerks",
+        artistName: "Noah D.",
+        artistAlias: "aka nonondr"
+      },
+      {
+        src: "k3.jpeg",
+        title: "Metamorphose des Codes",
+        price: "4.494 €",
+        caption: "Metamorphose des Codes · Abbildung des Kunstwerks",
+        artistName: "Erik K.",
+        artistAlias: "aka the Sailor"
+      }
+    ];
+
+    let currentIndex = 0;
+
+    function switchArtwork(index) {
+      if (index === currentIndex) return;
+      
+      const artworkBox = document.getElementById('artworkBox');
+      const imgElem = document.getElementById('artworkImage');
+      const captionElem = document.getElementById('artworkCaption');
+      const artistElem = document.getElementById('artworkArtist');
+      const counterElem = document.getElementById('artworkCounter');
+      const navButtons = document.querySelectorAll('#galleryNav button');
+      const textSlides = document.querySelectorAll('.text-slide');
+
+      artworkBox.classList.add('fade-out');
+      textSlides[currentIndex].classList.remove('active');
+
+      setTimeout(() => {
+        currentIndex = index;
+        
+        const item = artworks[currentIndex];
+        imgElem.src = item.src;
+        imgElem.alt = item.title;
+        captionElem.textContent = item.caption;
+        artistElem.innerHTML = `${item.artistName} <span>${item.artistAlias}</span>`;
+        counterElem.textContent = `0${currentIndex + 1} / 03`;
+
+        navButtons.forEach((btn, idx) => {
+          if (idx === currentIndex) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        textSlides[currentIndex].classList.add('active');
+        artworkBox.classList.remove('fade-out');
+      }, 300);
+    }
+
+    function nextArtwork() {
+      const nextIndex = (currentIndex + 1) % artworks.length;
+      switchArtwork(nextIndex);
+    }
+
+    function prevArtwork() {
+      const prevIndex = (currentIndex - 1 + artworks.length) % artworks.length;
+      switchArtwork(prevIndex);
+    }
+
+    /* Modal Steuerung für Kaufanfrage exakt nach Bildvorlage */
+    function openInquiryModal() {
+      const item = artworks[currentIndex];
+      const modal = document.getElementById('inquiryModal');
+      
+      document.getElementById('inquirySubtitle').textContent = `Interesse an "${item.title}"?`;
+      document.getElementById('inquiryWerkTitle').textContent = `Werk: ${item.title} von ${item.artistName} (${item.artistAlias})`;
+      document.getElementById('inquiryPreisLine').textContent = `Preis: ${item.price} (brutto exkl. MwSt.)`;
+      
+      const mailSubject = encodeURIComponent(`Kaufanfrage: ${item.title}`);
+      document.getElementById('inquiryMailLink').href = `mailto:gallery@avantgarde-art.com?subject=${mailSubject}`;
+      
+      modal.classList.add('open');
+    }
+
+    function closeInquiryModal() {
+      const modal = document.getElementById('inquiryModal');
+      modal.classList.remove('open');
+    }
+
+    /* Dark Mode Manager */
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      const btn = document.getElementById('themeToggle');
+      
+      if (isDark) {
+        btn.textContent = '☀️ Light Mode';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        btn.textContent = '🌙 Dark Mode';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('themeToggle').textContent = '☀️ Light Mode';
+    }
+
+    /* Keyboard navigation */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        nextArtwork();
+      } else if (e.key === 'ArrowLeft') {
+        prevArtwork();
+      } else if (e.key === 'Escape') {
+        closeLightbox();
+        closeInquiryModal();
+      }
+    });
+
+    /* Lightbox Modal */
+    function openLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      const lightboxImg = document.getElementById('lightboxImage');
+      lightboxImg.src = artworks[currentIndex].src;
+      modal.classList.add('open');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('open');
+    }
+  </script>
+</body>
+</html>
