@@ -59,7 +59,7 @@
       padding: 28px clamp(20px, 5vw, 76px) 32px;
     }
 
-    header, footer {
+    header, .footer_div {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -351,10 +351,9 @@
       border-color: var(--ink);
     }
 
-    footer {
+    #footer_div_top {
       padding-top: 18px;
       border-top: 1px solid var(--line);
-      color: var(--muted);
     }
 
     /* Lightbox Modal */
@@ -481,6 +480,10 @@
       opacity: 1;
     }
 
+    .footer_div {
+      color: var(--muted);
+    }
+
     @media (max-width: 860px) {
       main {
         grid-template-columns: 1fr;
@@ -500,7 +503,7 @@
         max-width: 100%;
       }
       
-      header, footer {
+      header, .footer_div {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
@@ -644,11 +647,15 @@
     </main>
 
     <footer>
-      <span>Ausstellung 2026</span>
-      <span><a href="Datenschutz.html" class="eyebrow">Datenschutzerklärung</a></span>
-      <span><a class="eyebrow">Impressum</a></span>
-      <span>© Kunstwerk Portfolio</span>
-       <p><small>Dies ist eine reine Satire-/Meme-Website zu Unterhaltungszwecken. Es werden keine echten Kunstwerke verkauft und keine kommerziellen Absichten verfolgt.</small></p>
+        <div class="footer_div" id="footer_div_top">
+            <span>Ausstellung 2026</span>
+            <span><a href="Datenschutz.html" class="eyebrow">Datenschutzerklärung</a></span>
+            <span><a class="eyebrow">Impressum</a></span>
+            <span>© Kunstwerk Portfolio</span><br><br><br>
+        </div>
+        <div class="footer_div">
+            <p><small>Dies ist eine reine Satire-/Meme-Website zu Unterhaltungszwecken. Es werden keine echten Kunstwerke verkauft und keine kommerziellen Absichten verfolgt.</small></p>
+        </div>
     </footer>
   </div>
 
