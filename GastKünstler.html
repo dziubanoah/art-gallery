@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e7e1">
+  <title>Teilnahmebedingungen für Gastkünstler — Portfolio</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #e9e7e1;
+      --paper-card: #dedbd4;
+      --ink: #25241f;
+      --muted: #77756e;
+      --line: rgba(37, 36, 31, 0.2);
+      --accent: #9b644c;
+      --description-text: #494740;
+    }
+
+    body.dark-mode {
+      color-scheme: dark;
+      --paper: #161513;
+      --paper-card: #211f1c;
+      --ink: #f0eee9;
+      --muted: #a09d95;
+      --line: rgba(240, 238, 233, 0.15);
+      --accent: #d49070;
+      --description-text: #c2beba;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px clamp(20px, 5vw, 60px);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .mark {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .back-link {
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    main {
+      padding: 40px 0;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      margin: 0 0 32px;
+      line-height: 1.1;
+    }
+
+    .section-block {
+      background: var(--paper-card);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .section-block h2 {
+      font-size: 20px;
+      font-weight: 400;
+      margin: 0 0 12px;
+      font-family: Georgia, serif;
+      color: var(--ink);
+    }
+
+    .section-block p, .section-block li {
+      color: var(--description-text);
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0 0 12px;
+    }
+
+    .section-block ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .legal-note {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    footer {
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .section-block {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <span class="mark">Galerie Richtlinien</span>
+      <a href="index.html" class="back-link">← Zurück zur Galerie</a>
+    </header>
+
+    <main>
+      <p class="eyebrow">Auszug &amp; Regularien</p>
+      <h1>Bedingungen für Gastkünstler &amp; Aussteller</h1>
+
+      <!-- §1 Erlösteilung -->
+      <article class="section-block">
+        <h2>§ 1 Erlösteilung &amp; Galerieprovision (50/50-Prinzip)</h2>
+        <p>
+          Kommt es während oder infolge der Präsentation auf dieser Plattform zu einem Verkauf eines ausgestellten Kunstwerks, wird der erzielte Brutto-Verkaufserlös (abzüglich nachweisbarer Versand- und Transaktionskosten) exakt zu <strong>50 % an den Gastkünstler</strong> ausgeschüttet und zu <strong>50 % als Galerieprovision</strong> einbehalten.
+        </p>
+        <p class="legal-note">
+          Rechtsgrundlage: Vertagliche Provisionsvereinbarung gem. § 311 Abs. 1 BGB i. V. m. § 354 HGB. Die Galerie übernimmt hierbei die administrative Verkaufsabwicklung und Kontaktaufnahme.
+        </p>
+      </article>
+
+      <!-- §2 Rechte & Eigentum -->
+      <article class="section-block">
+        <h2>§ 2 Urheberrecht &amp; Nutzungsrechte</h2>
+        <p>
+          Der Gastkünstler bleibt zu jedem Zeitpunkt uneingeschränkter Urheber des Kunstwerks im Sinne des <strong>§ 7 UrhG</strong>. Der Künstler räumt dem Galeriebetreiber für die Dauer der Ausstellung ein einfaches, unentgeltliches Recht ein, digitale Abbildungen des Werkes auf der Website sowie in zugehörigen Werbekanälen darzustellen (§ 19a UrhG).
+        </p>
+      </article>
+
+      <!-- §3 Kennzeichnung als Gastkünstler -->
+      <article class="section-block">
+        <h2>§ 3 Kennzeichnung als Gastkünstler &amp; Urheberbenennung</h2>
+        <p>
+          Gemäß <strong>§ 13 UrhG</strong> hat der Künstler das Recht auf Nennung seines Urhebernamens (Klarname oder Pseudonym/Alias). 
+        </p>
+        <p>
+          Der Betreiber behält sich das Recht vor, Werke externer Künstler auf der Plattform transparent als <strong>„Gastkünstler“</strong>, <strong>„Gastaussteller“</strong> oder über eine entsprechende Ergänzung im Künstler-Credit einzubinden. Dies dient der klaren Information des Galeriepublikums über den Urheber- und Ausstellungskontext.
+        </p>
+      </article>
+
+      <!-- §4 Plattform-Nutzung & Umgehungsverbot -->
+      <article class="section-block">
+        <h2>§ 4 Verbot der Plattform-Umgehung &amp; Schadensersatz</h2>
+        <p>
+          Die Plattform dient als exklusives Schaufenster und Vertriebskanal. Dem Gastkünstler ist es untersagt, die Reichweite der Website lediglich als Akquisefläche zu nutzen, um Kaufanfragen an der Galerie vorbei abzuwickeln ("Direktgeschäft-Umgehung").
+        </p>
+        <p>
+          Wird ein Kaufkontakt nachweislich über diese Plattform initiiert und schließt der Gastkünstler den Verkauf außerhalb der Galerie ab, um die Galerieprovision zu umgehen, entsteht ein direkter Schadensersatzanspruch in Höhe von <strong>50 % des vereinbarten oder üblichen Verkaufspreises</strong>.
+        </p>
+        <p class="legal-note">
+          Rechtsgrundlage: Vertragliche Pflichtverletzung gem. § 280 Abs. 1 BGB, Schadensersatzanspruch gem. § 249 BGB sowie Auskunftsanspruch über die Verkaufserlöse nach dem Grundsatz von Treu und Glauben (§ 242 BGB).
+        </p>
+      </article>
+
+      <!-- §5 Zusätzliche Schutz-Klauseln -->
+      <article class="section-block">
+        <h2>§ 5 Garantie der Rechtefreiheit &amp; Haftung</h2>
+        <ul>
+          <li><strong>Rechte Dritter:</strong> Der Gastkünstler versichert ausdrücklich, dass das eingereichte Werk frei von Rechten Dritter ist und keine fremden Urheber-, Marken- oder Persönlichkeitsrechte verletzt. Der Künstler stellt den Galeriebetreiber von allen Ansprüchen Dritter vollumfänglich frei (§ 257 BGB).</li>
+          <li><strong>Echtheit:</strong> Der Künstler garantiert die Originalität des Werkes. Bei Fälschungsverdacht oder berechtigten Käuferreklamationen haftet der Gastkünstler vollumfänglich.</li>
+          <li><strong>Kuratorisches Vorbehaltsrecht:</strong> Der Betreiber behält sich das Recht vor, Werke ohne Angabe von Gründen jederzeit aus der digitalen Ausstellung zu entfernen.</li>
+        </ul>
+      </article>
+
+      <!-- §6 Transparenz & Fairplay -->
+      <article class="section-block">
+        <h2>§ 6 Abrechnung &amp; Auszahlung (Fairness-Garantie)</h2>
+        <p>
+          Eingehende Gelder werden auf einem separaten Abwicklungskonto verwahrt. Die Auszahlung der 50%-Quote an den Gastkünstler erfolgt spätestens 14 Werktage nach vollständigem Zahlungseingang und Ablauf etwaiger gesetzlicher Widerrufsfristen des Käufers.
+        </p>
+      </article>
+    </main>
+
+    <footer>
+      <span>Ausstellung &amp; Portfolio</span>
+      <span>Gültig für alle externen Einreichungen</span>
+      <span>© Kunstwerk Portfolio</span>
+    </footer>
+  </div>
+
+  <script>
+    // Übernimmt den Dark Mode vom Hauptportfolio, falls gesetzt
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+  </script>
+</body>
+</html>
