@@ -536,6 +536,7 @@
           <li><button class="active" onclick="switchArtwork(0)">01. Ohne Titel</button></li>
           <li><button onclick="switchArtwork(1)">02. Lebenslinien</button></li>
           <li><button onclick="switchArtwork(2)">03. Metamorphose des Codes</button></li>
+          <li><button onclick="switchArtwork(3)">04. Die Mechanik des Seins</button></li>
         </ul>
         <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
       </div>
@@ -553,7 +554,7 @@
               <figcaption class="caption" id="artworkCaption">Ohne Titel · Abbildung des Kunstwerks</figcaption>
               <div class="artist-credit" id="artworkArtist">Noah D. <span>aka nonondr</span></div>
             </div>
-            <span class="counter" id="artworkCounter">01 / 03</span>
+            <span class="counter" id="artworkCounter">01 / 04</span>
           </div>
         </div>
 
@@ -643,6 +644,26 @@
           </div>
         </article>
 
+        <!-- Werk 4 -->
+        <article class="text text-slide" id="slide-3">
+          <p class="eyebrow">Aura der Materie</p>
+          <h1>Die Mechanik<br>des Seins</h1>
+          <div class="price-tag">
+            12.650 € <span class="vat-note">(brutto exkl. MwSt.)</span>
+          </div>
+          <div class="description">
+            <p>
+              Aus ausgedienten Magneten gewuchert, vereint diese Skulptur die schweißtreibende Agonie jagender Raubtiere mit der eiskalten Entstehung des Universums und der mystischen Aura dunkler Materie.
+            </p>
+            <p>
+              Aus diesem astrophysikalischen Chaos erwächst wundersamerweise die wohlige Ausstrahlung eines leckeren Essens.
+            </p>
+            <p>
+              Zuletzt schenkt es einem die Erkenntnis der Zeit – und das Wissen, dass Arbeit der wahre Schlüssel zur Unsterblichkeit ist.
+            </p>
+          </div>
+        </article>
+
       </div>
     </main>
 
@@ -708,6 +729,14 @@
         caption: "Metamorphose des Codes · Abbildung des Kunstwerks",
         artistName: "Erik K.",
         artistAlias: "aka the Sailor"
+      },
+      {
+        src: "k4.jpeg",
+        title: "Die Mechanik des Seins",
+        price: "12.650 €",
+        caption: "Die Mechanik des Seins · Abbildung des Kunstwerks",
+        artistName: "Noah D.",
+        artistAlias: "aka nonondr"
       }
     ];
 
@@ -735,7 +764,10 @@
         imgElem.alt = item.title;
         captionElem.textContent = item.caption;
         artistElem.innerHTML = `${item.artistName} <span>${item.artistAlias}</span>`;
-        counterElem.textContent = `0${currentIndex + 1} / 03`;
+        
+        const formattedCurrent = String(currentIndex + 1).padStart(2, '0');
+        const formattedTotal = String(artworks.length).padStart(2, '0');
+        counterElem.textContent = `${formattedCurrent} / ${formattedTotal}`;
 
         navButtons.forEach((btn, idx) => {
           if (idx === currentIndex) {
